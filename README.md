@@ -1,3 +1,4 @@
 CSV uploader
 
-![Captura de pantalla 2024-12-05 050052](https://github.com/user-attachments/assets/817e067a-ecb6-4cbd-9ada-5f338c6bb450)
+![image](https://github.com/user-attachments/assets/3a341836-0ed3-443d-a390-6a18e613608b)
+
