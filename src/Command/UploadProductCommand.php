@@ -37,13 +37,13 @@ class UploadProductCommand extends Command
         $filePath = $input->getArgument('file');
         $io = new SymfonyStyle($input, $output);
         if (!file_exists($filePath)) {
-            $output->writeln("File not found: $filePath");
+            $io->error("File not found: $filePath");
             return Command::FAILURE;
         }
 
         $fileExtension = pathinfo($filePath, PATHINFO_EXTENSION);
         if (strtolower($fileExtension) !== 'csv') {
-            $output->writeln('<error>Invalid file type. Only CSV files are allowed.</error>');
+            $io->error('<error>Invalid file type. Only CSV files are allowed.</error>');
             return Command::FAILURE;
         }    
         
@@ -56,12 +56,13 @@ class UploadProductCommand extends Command
         $successful = 0;
         $skipped = 0;
         $notImported = [];
+
         while (($data = fgetcsv($file)) !== false) {
             $processed++;
     
-            $stock = $data[3]??'';
+            $stock = $data[3]??0;
 
-            $price = $data[4]??'';
+            $price = $data[4]??0;
 
             if(is_numeric($price)){
                 $price = (float)$price;
@@ -78,7 +79,7 @@ class UploadProductCommand extends Command
                 $skipped++;
                 continue;
             }
-            $isDiscontinued = strtolower($data[5]) === 'yes';
+            $isDiscontinued = strtolower( $data[5]?? '' ) === 'yes';
     
             if (($stock < 10 && $price < 5) || $price > 1000) {
                 $notImported[] = $data;
@@ -106,7 +107,7 @@ class UploadProductCommand extends Command
         
         $io->info("Processed: $processed");
         $io->text("Successful: $successful");
-        $io->text("Skipped: $skipped");
+        $io->text("Skipped: $skipped. See them down below in the following table:");
         if($skipped > 0){
             $io->table(
                 ["Product Code","Product Name",	"Product Description","Stock","Cost in GBP","Discontinued"
@@ -115,8 +116,6 @@ class UploadProductCommand extends Command
             );
 
         }
-       
-        
         return Command::SUCCESS;
     }
 }
