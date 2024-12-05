@@ -1,4 +1,5 @@
 CSV uploader
 
-![image](https://github.com/user-attachments/assets/3a341836-0ed3-443d-a390-6a18e613608b)
+![image](https://github.com/user-attachments/assets/0c1f8878-5628-4b05-aaf2-aafc54ab9f12)
+
 
