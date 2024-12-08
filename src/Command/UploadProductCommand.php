@@ -63,7 +63,6 @@ class UploadProductCommand extends Command
 
         // Display rows that were skipped
         if($result['errors']['rows'] > 0 ){
-            "<info></info>";
             $io->error("Skipped: {$result['skipped']}. Please check the following:");
             $io->table($result['errors']['header'], $result['errors']['rows']);
         }
