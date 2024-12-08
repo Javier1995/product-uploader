@@ -21,7 +21,7 @@ class Importer {
     public const IMPORTERS_FILES = [
         self::CSV_IMPORTER => CSVImporter::class
        /*  self::XML_IMPORTER => 'XMLImporter:class' */
-        /* self::JSON_IMPORTER => 'XMLImporter:class' */
+        /* self::JSON_IMPORTER => 'JSONImporter:class' */
     ];
     
     public function __construct(
