@@ -50,7 +50,7 @@ jobs:
       # Run database migrations for the test environment
       - name: Set up test database
         env:
-          DATABASE_URL: {{ secrets.DATABASE_URL }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
           php bin/console doctrine:database:create --if-not-exists --env=test
           php bin/console doctrine:migrations:migrate --no-interaction --env=test
@@ -58,5 +58,5 @@ jobs:
       # Run tests in test mode
       - name: Run tests in test mode
         env:
-          DATABASE_URL:  {{ secrets.DATABASE_URL }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: php bin/phpunit --testdox
