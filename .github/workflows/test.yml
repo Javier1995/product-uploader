@@ -17,7 +17,7 @@ jobs:
         image: mysql:5.7
         env:
           MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: app_test
+          MYSQL_DATABASE: app
         ports:
           - 3306:3306
         options: >-
@@ -39,24 +39,21 @@ jobs:
           extensions: mbstring, pdo, pdo_mysql, intl
           coverage: none
 
-      # Install Composer dependencies
+
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
-      # Set up the environment
+
       - name: Copy environment files
         run: cp .env .env.test
 
-      # Run database migrations for the test environment
       - name: Set up test database
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DATABASE_URL: mysql://root:root@127.0.0.1:3306/app_test
         run: |
           php bin/console doctrine:database:create --if-not-exists --env=test
           php bin/console doctrine:migrations:migrate --no-interaction --env=test
-
-      # Run tests in test mode
       - name: Run tests in test mode
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DATABASE_URL: mysql://root:root@127.0.0.1:3306/app_test
         run: php bin/phpunit --testdox
