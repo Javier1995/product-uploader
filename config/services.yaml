@@ -19,6 +19,12 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+    App\Service\Importers\Importer:
+        arguments:
+            $entityManager: '@doctrine.orm.entity_manager'
+            $container: '@service_container'
+    App\Service\Importers\CSVImporter:
+        public: true
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
